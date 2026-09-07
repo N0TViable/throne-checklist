@@ -2,7 +2,7 @@
 
 A dungeon cooldown tracker and Tumgir Hollow run log for Throne & Liberty.
 
-**Live page:** https://YOUR-USERNAME.github.io/throne-checklist/
+**Live page:** https://n0tviable.github.io/throne-checklist/
 
 Created by n0tviable · Server: Distortion
 
