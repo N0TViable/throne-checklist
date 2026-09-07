@@ -1,4 +1,4 @@
-# Throne Mini Game Checklist
+# Throne & Liberty Mini Game Checklist
 
 A dungeon cooldown tracker and Tumgir Hollow run log for Throne & Liberty.
 
