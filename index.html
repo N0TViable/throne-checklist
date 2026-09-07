@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Throne Mini Game Checklist</title>
+<style>
+/* ===== neon nocturne: dark aurora-glow style ===== */
+:root{
+  --brand-a:#7c5cff; --brand-b:#ff5c8a; --brand-c:#22d3c5; --brand-d:#ffb020;
+  --bg:#0b0c10; --card:#15171f; --card2:#1b1e28; --line:rgba(255,255,255,.08);
+  --text:#e7e9ee; --muted:#a6adbb;
+}
+*{box-sizing:border-box}
+html,body{overflow-x:hidden;margin:0}
+body{
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px;line-height:1.5;
+  background:
+    radial-gradient(1100px 600px at 12% -10%, rgba(124,92,255,.35), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(34,211,197,.22), transparent 55%),
+    var(--bg);
+  background-attachment:fixed;
+}
+a{color:inherit}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:1rem;padding:.45rem .9rem;
+  background:rgba(11,12,16,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .brand{font-weight:800;letter-spacing:.02em;display:flex;align-items:center}
+.nav .brand .mk{display:inline-block;background:linear-gradient(120deg,var(--brand-a),var(--brand-c));
+  border-radius:7px;padding:.15rem .45rem;margin-right:.5rem;color:#fff;font-size:.8rem}
+.nav a.link{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:600;cursor:pointer}
+.nav a.link:hover{color:var(--text)}
+.nav .spacer{flex:1}
+.nav .updated{color:var(--muted);font-size:.78rem}
+.hero{display:flex;align-items:center;justify-content:center;gap:1.1rem;flex-wrap:wrap;padding:1.1rem 1.25rem .9rem}
+.kicker{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .7rem;border-radius:999px;
+  background:rgba(124,92,255,.15);border:1px solid rgba(124,92,255,.4);font-size:.68rem;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;color:#c9bbff;animation:floatIn .5s ease both}
+.hero h1{font-size:clamp(1.2rem,2.6vw,1.75rem);line-height:1;font-weight:800;margin:0;
+  background:linear-gradient(120deg,var(--brand-a),var(--brand-b) 55%,var(--brand-d));
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:floatIn .5s ease both .05s}
+.bignum{font-size:clamp(1.5rem,3.4vw,2.2rem);font-weight:900;letter-spacing:-.02em;margin:0;color:var(--brand-c);
+  font-variant-numeric:tabular-nums;animation:pop .6s cubic-bezier(.2,1.4,.4,1) both .1s}
+@keyframes floatIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{opacity:0;transform:scale(.75)}60%{opacity:1}100%{opacity:1;transform:scale(1)}}
+.section{padding:.9rem 1.25rem;max-width:1280px;margin:0 auto}
+.section-title{display:flex;align-items:center;gap:.5rem;font-size:1.05rem;font-weight:800;margin-bottom:.55rem}
+.section-sub{color:var(--muted);margin:-.3rem 0 .7rem;max-width:90ch;font-size:.8rem}
+.grid{display:grid;gap:.6rem}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-6{grid-template-columns:repeat(6,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.card-header{padding:.5rem .75rem;border-bottom:1px solid var(--line);font-weight:700;display:flex;align-items:center;gap:.45rem;font-size:.82rem}
+.card-body{padding:.75rem}
+.stat .v{font-size:1.3rem;font-weight:900;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.stat .l{color:var(--muted);font-size:.7rem;margin-top:.1rem;line-height:1.25}
+.stat .card-body{padding:.6rem .7rem}
+.stat-pop{transition:transform .25s ease,box-shadow .25s ease;cursor:pointer}
+.stat-pop:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.a-a{color:var(--brand-a)} .a-b{color:var(--brand-b)} .a-c{color:var(--brand-c)} .a-d{color:var(--brand-d)}
+.item-card{border-left:3px solid var(--brand-d);animation:floatIn .45s ease both}
+.item-card.hot{border-left-color:var(--brand-b)}
+.badge{display:inline-block;border-radius:999px;padding:.2rem .6rem;font-size:.72rem;font-weight:800;letter-spacing:.03em}
+.badge.b-warn{background:rgba(255,176,32,.2);color:#ffc866}
+.badge.b-hot{background:rgba(255,92,138,.2);color:#ff8aad}
+.badge.b-info{background:rgba(124,92,255,.2);color:#b7a4ff}
+.bar-row{display:grid;grid-template-columns:minmax(70px,24%) 1fr auto;align-items:center;gap:.55rem;margin-bottom:.32rem;font-size:.76rem}
+.bar-label{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{background:rgba(255,255,255,.06);border-radius:999px;height:7px;overflow:hidden}
+.bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--brand-a),var(--brand-c))}
+.bar-val{font-weight:800;font-variant-numeric:tabular-nums}
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.marquee{display:flex;gap:2.2rem;white-space:nowrap;animation:scrollX 26s linear infinite;padding:.5rem 0}
+@keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+footer{text-align:center;padding:.9rem 1rem 1.6rem;color:var(--muted);font-size:.78rem}
+.note-chip{display:inline-block;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:8px;padding:.35rem .65rem;color:var(--muted);font-size:.7rem;margin-top:.4rem}
+@media(max-width:1150px){.grid-6{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){.grid-4,.grid-6{grid-template-columns:repeat(2,1fr)}.grid-2{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  .bar-fill{transition:none !important}
+}
+
+/* ===== game layer, built on top of the house style ===== */
+.btn{background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:9px;
+  padding:.36rem .7rem;font-weight:700;font-size:.79rem;cursor:pointer;transition:transform .15s ease,border-color .15s ease}
+.btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.6)}
+.btn.primary{background:linear-gradient(120deg,var(--brand-a),var(--brand-c));border-color:transparent;color:#fff}
+.btn.ghost{background:transparent}
+.row-actions{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;margin-bottom:.6rem}
+
+#dgnList{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+@media(max-width:820px){#dgnList{grid-template-columns:1fr}}
+.dgn{display:grid;grid-template-columns:auto 1fr auto;gap:.6rem;align-items:center;padding:.42rem .6rem;position:relative;margin:0}
+.dgn .meta{min-width:0}
+.dgn .name{font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:.4rem;min-width:0}
+.dgn .name .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dgn .right{text-align:right;display:flex;flex-direction:column;align-items:flex-end}
+.dgn .clock{font-variant-numeric:tabular-nums;font-weight:900;font-size:1.05rem;letter-spacing:.02em;
+  background:none;border:0;padding:0;cursor:pointer;font-family:inherit;line-height:1.1}
+.dgn .clock:hover{text-decoration:underline dotted}
+.dgn .clock.ready{color:var(--brand-c)}
+.dgn .clock.run{color:var(--brand-d)}
+.dgn .sub{color:var(--muted);font-size:.62rem;line-height:1.1}
+.dgn .track{grid-column:1 / -1;height:3px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:.15rem}
+.dgn .edit{grid-column:1 / -1;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-top:.35rem}
+.dgn .edit[hidden]{display:none}
+.dgn .edit input{width:96px;padding:.28rem .45rem;font-size:.8rem;border-radius:7px}
+.dgn .edit input.bad{border-color:rgba(255,92,138,.7);box-shadow:0 0 0 3px rgba(255,92,138,.16)}
+.dgn .ehint{color:var(--muted);font-size:.62rem}
+.btn.mini{padding:.26rem .5rem;font-size:.72rem;border-radius:7px}
+.btn.mini:hover{transform:none}
+.dgn .badge{font-size:.6rem;padding:.1rem .4rem}
+.rune{width:20px;height:20px;flex:0 0 20px;font-size:.72rem;border-radius:6px}
+.dgn .track > i{display:block;height:100%;width:0%;border-radius:999px;
+  background:linear-gradient(90deg,var(--brand-d),var(--brand-b));transition:width .35s linear}
+.item-card.on-cd{border-left-color:var(--brand-a);opacity:.92}
+.item-card.ready-pulse{animation:readyPulse 1.6s ease-in-out 6}
+@keyframes readyPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(34,211,197,0)}
+  50%{box-shadow:0 0 0 4px rgba(34,211,197,.28)}
+}
+.rune{width:26px;height:26px;flex:0 0 26px;border-radius:8px;display:grid;place-items:center;
+  font-size:.85rem;background:rgba(124,92,255,.16);border:1px solid rgba(124,92,255,.35)}
+
+/* seal = the checkbox */
+.seal{position:relative;width:26px;height:26px;flex:0 0 26px;cursor:pointer;display:grid;place-items:center}
+.seal input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.seal .box{width:20px;height:20px;border-radius:6px;border:2px solid rgba(255,255,255,.25);
+  display:grid;place-items:center;transition:all .2s ease;font-size:.9rem;color:transparent;font-weight:900}
+.seal input:hover + .box{border-color:var(--brand-c)}
+.seal input:focus-visible + .box{outline:2px solid var(--brand-a);outline-offset:2px}
+.seal .box{font-size:.72rem}
+.seal input:checked + .box{background:linear-gradient(120deg,var(--brand-a),var(--brand-b));
+  border-color:transparent;color:#fff}
+
+/* forms */
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem}
+@media(max-width:900px){.form-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.form-grid{grid-template-columns:1fr}.dgn{grid-template-columns:auto 1fr}.dgn .right{grid-column:1 / -1;text-align:left}}
+label.f{display:block;font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+input[type=number],input[type=text],select{width:100%;background:var(--card2);border:1px solid var(--line);
+  border-radius:8px;color:var(--text);padding:.35rem .5rem;font-size:.84rem;font-family:inherit}
+input:focus,select:focus{outline:none;border-color:var(--brand-a);box-shadow:0 0 0 3px rgba(124,92,255,.18)}
+input.computed{background:rgba(124,92,255,.12);border-color:rgba(124,92,255,.45);color:var(--brand-c);
+  font-weight:800;font-variant-numeric:tabular-nums;cursor:default}
+input.computed.bad{background:rgba(255,92,138,.14);border-color:rgba(255,92,138,.55);color:#ff8aad}
+.buffs{display:flex;gap:.55rem;flex-wrap:wrap}
+.buff{display:inline-flex;align-items:center;gap:.35rem;background:var(--card2);border:1px solid var(--line);
+  border-radius:999px;padding:.28rem .6rem;cursor:pointer;font-size:.76rem;font-weight:700;user-select:none;transition:all .18s ease}
+.buff input{accent-color:var(--brand-c);margin:0}
+.buff.on{border-color:var(--brand-c);background:rgba(34,211,197,.14);color:#8ff0e7}
+.hint{color:var(--muted);font-size:.65rem;margin-top:.15rem;line-height:1.2}
+.err{color:#ff8aad;font-size:.75rem;font-weight:700;min-height:1em;margin-top:.3rem}
+
+/* table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+th,td{padding:.3rem .5rem;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;font-weight:800}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+td.num{font-variant-numeric:tabular-nums;font-weight:700}
+.pos .cellval,.pos{color:var(--brand-c)} .neg{color:var(--brand-b)} .gold .cellval,.gold{color:var(--brand-d)}
+td.editable{padding:.15rem .35rem}
+.cellval{background:none;border:1px dashed transparent;color:inherit;font:inherit;font-weight:700;
+  font-variant-numeric:tabular-nums;padding:.14rem .35rem;border-radius:6px;cursor:pointer;width:100%;text-align:left}
+.cellval:hover{border-color:rgba(124,92,255,.6);background:rgba(124,92,255,.1)}
+.celledit{width:100%;min-width:70px;padding:.14rem .35rem !important;font-size:.78rem !important;
+  border-radius:6px !important;font-variant-numeric:tabular-nums}
+.celledit.bad{border-color:rgba(255,92,138,.8) !important;box-shadow:0 0 0 3px rgba(255,92,138,.18) !important}
+input.bad,select.bad{border-color:rgba(255,92,138,.8);box-shadow:0 0 0 3px rgba(255,92,138,.16)}
+.buffcell{white-space:normal;max-width:260px}
+.pill.toggle{border:1px solid transparent;cursor:pointer;font-family:inherit;
+  background:rgba(255,255,255,.05);color:var(--muted);margin:.06rem .18rem .06rem 0}
+.pill.toggle:hover{border-color:rgba(34,211,197,.6)}
+.pill.toggle.on{background:rgba(34,211,197,.16);color:#8ff0e7}
+.pill{display:inline-block;border-radius:999px;padding:.06rem .4rem;font-size:.62rem;font-weight:800;
+  background:rgba(34,211,197,.16);color:#8ff0e7;margin-right:.25rem}
+.x{background:none;border:none;color:var(--muted);cursor:pointer;font-weight:900;font-size:1rem;padding:0 .3rem}
+.x:hover{color:var(--brand-b)}
+.empty{color:var(--muted);padding:.8rem;text-align:center;font-size:.78rem}
+
+/* toasts */
+#toasts{position:fixed;right:1rem;bottom:1rem;z-index:200;display:flex;flex-direction:column;gap:.6rem;max-width:340px}
+.toast{background:var(--card);border:1px solid rgba(34,211,197,.5);border-left:4px solid var(--brand-c);
+  border-radius:12px;padding:.8rem .95rem;box-shadow:0 18px 40px rgba(0,0,0,.55);animation:floatIn .35s ease both}
+.toast .t{font-weight:800;font-size:.9rem;color:var(--brand-c)}
+.toast .d{color:var(--muted);font-size:.8rem;margin-top:.15rem}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand"><span class="mk">n0tviable's</span> Throne Mini Game Checklist</div>
+  <a class="link" href="#gates">Gates</a>
+  <a class="link" href="#hollow">Tumgir Hollow</a>
+  <a class="link" href="#trends">Trends</a>
+  <div class="spacer"></div>
+  <button class="btn ghost" id="soundBtn" title="Toggle the ready chime">&#128266; Chime: On</button>
+  <div class="updated" id="loadedAt">Loaded --:--</div>
+</nav>
+
+<header class="hero">
+  <div class="kicker">&#9876; Throne &amp; Liberty &middot; Dungeon Ops</div>
+  <div class="bignum" id="heroNum">8 / 8</div>
+  <h1 id="heroTitle">All Gates Open</h1>
+</header>
+
+<div class="marquee-wrap">
+  <div class="marquee" id="marquee"></div>
+</div>
+
+<section class="section" id="gates">
+  <div class="section-title">&#128273; Dungeon Gates
+    <span class="section-sub" style="margin:0;font-weight:600">check on clear &middot; 30 min &middot; click the clock to set time manually</span>
+  </div>
+  <div class="row-actions">
+    <button class="btn primary" id="sealAll">Seal all</button>
+    <button class="btn" id="resetAll">Break all seals</button>
+    <span class="badge b-info" id="nextUp">Next: —</span>
+  </div>
+  <div id="dgnList"></div>
+</section>
+
+<section class="section" id="hollow">
+  <div class="section-title">&#127756; Tumgir Hollow &mdash; Run Log</div>
+  <p class="section-sub">Tokens before and after; used calculates itself. Saves automatically.</p>
+
+  <div class="grid grid-6" id="kpis" style="margin-bottom:.6rem"></div>
+
+  <div class="card" style="margin-bottom:.6rem">
+    <div class="card-header">&#128221; Log a run</div>
+    <div class="card-body">
+      <div class="form-grid">
+        <div>
+          <label class="f" for="fTokStart">Abyss Contract Tokens at start</label>
+          <input type="text" inputmode="numeric" id="fTokStart" placeholder="0">
+          <div class="hint" id="hintStart">&nbsp;</div>
+        </div>
+        <div>
+          <label class="f" for="fTokAfter">Abyss Contract Tokens after the run</label>
+          <input type="text" inputmode="numeric" id="fTokAfter" placeholder="0">
+          <div class="hint" id="hintAfter">&nbsp;</div>
+        </div>
+        <div>
+          <label class="f" for="fTokUsed">Abyss Contract Tokens used</label>
+          <input type="text" id="fTokUsed" class="computed" readonly tabindex="-1" value="0">
+          <div class="hint">auto: start &minus; after</div>
+        </div>
+        <div>
+          <label class="f" for="fCores">Skill Cores dropped</label>
+          <select id="fCores">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <div>
+          <label class="f" for="fWmp">Weapon Mastery Points</label>
+          <input type="text" inputmode="numeric" id="fWmp" placeholder="0">
+        </div>
+        <div>
+          <label class="f" for="fSollant">Sollant acquired</label>
+          <input type="text" inputmode="numeric" id="fSollant" placeholder="0">
+          <div class="hint" id="hintSollant">from selling drops</div>
+        </div>
+        <div style="grid-column:span 2">
+          <label class="f">Buffs used</label>
+          <div class="buffs">
+            <label class="buff" id="bufMastery"><input type="checkbox" data-buff="Mastery Report"> &#128220; Mastery Report</label>
+            <label class="buff" id="bufFruit"><input type="checkbox" data-buff="Abundance Fruit"> &#127815; Abundance Fruit</label>
+            <label class="buff" id="bufPie"><input type="checkbox" data-buff="Golden Apple Pie"> &#129360; Golden Apple Pie</label>
+            <label class="buff" id="bufAnvil"><input type="checkbox" data-buff="Black Anvil"> &#128296; Black Anvil</label>
+          </div>
+        </div>
+      </div>
+      <div class="err" id="formErr"></div>
+      <div class="row-actions" style="margin:.9rem 0 0">
+        <button class="btn primary" id="addRun">&#10133; Log this run</button>
+        <button class="btn" id="clearForm">Clear fields</button>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      &#128203; Runs logged <span class="badge b-info" id="runCount" style="margin-left:.4rem">0</span>
+      <div class="spacer" style="flex:1"></div>
+      <button class="btn" id="copyCsv">Copy as CSV</button>
+      <button class="btn" id="dlCsv">Download CSV</button>
+      <button class="btn" id="wipeRuns">Clear log</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Logged</th><th>Tokens start</th><th>Tokens after</th><th>Tokens used</th>
+            <th>Sollant</th><th>Cores</th><th>Mastery pts</th><th>Buffs</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="runBody"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="runEmpty">No runs logged yet.</div>
+  </div>
+
+  <div class="card" style="margin-top:.6rem">
+    <div class="card-header">
+      &#128190; Save &amp; restore <span class="badge b-info" id="saveChip" style="margin-left:.4rem">AUTOSAVE ON</span>
+    </div>
+    <div class="card-body">
+      <div class="hint" id="saveState" style="margin:0 0 .8rem;font-size:.85rem"></div>
+      <label class="f" for="saveCode">Save code (full backup)</label>
+      <textarea id="saveCode" rows="2" spellcheck="false"
+        style="width:100%;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:var(--muted);
+               padding:.55rem .7rem;font-size:.75rem;font-family:ui-monospace,Menlo,Consolas,monospace;resize:vertical"></textarea>
+      <div class="err" id="restoreErr"></div>
+      <div class="row-actions" style="margin:.7rem 0 0">
+        <button class="btn primary" id="saveFile">&#128190; Save a copy with my data</button>
+        <button class="btn" id="copyCode">Copy save code</button>
+        <button class="btn" id="restoreCode">Restore from code</button>
+        <button class="btn" id="forgetAll">Forget everything</button>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="trends">
+  <div class="section-title">&#128200; Haul Trends</div>
+  <p class="section-sub">Last ten runs, newest first.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-header">&#128176; Sollant acquired by run</div>
+      <div class="card-body"><div id="barsSollant"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">&#9876; Weapon Mastery Points by run</div>
+      <div class="card-body"><div id="barsWmp"></div></div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:.6rem">
+    <div class="card">
+      <div class="card-header">&#128142; Skill Cores by run</div>
+      <div class="card-body"><div id="barsCores"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-header">&#129689; Contract Tokens used by run</div>
+      <div class="card-body"><div id="barsTokens"></div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:.6rem">
+    <div class="card-header">&#129514; Buff usage across all runs</div>
+    <div class="card-body"><div id="barsBuffs"></div></div>
+  </div>
+</section>
+
+<footer>
+  <div id="footLine">Five gates tracked. No runs logged yet.</div>
+  <div class="note-chip" id="footNote">Gates, countdowns and the run log save automatically to this browser. Created by n0tviable &middot; Server: Distortion</div>
+</footer>
+
+<div id="toasts"></div>
+
+<!-- Data baked into this file by "Save a copy with my data". Do not hand-edit. -->
+<script id="dataSeed" type="application/json">null</script>
+
+<script>
+/* ===== bars.js (house ranked bar list) ===== */
+function drawBars(container, rows, opts) {
+  const o = Object.assign({ stagger: 60, max: null }, opts || {});
+  container.textContent = '';
+  if (!rows || !rows.length) {
+    const empty = document.createElement('div');
+    empty.className = 'bar-label';
+    empty.textContent = 'Nothing to show.';
+    container.appendChild(empty);
+    return;
+  }
+  const max = o.max || Math.max.apply(null, rows.map(function (r) { return r.value; })) || 1;
+  const fills = [];
+  rows.forEach(function (r) {
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    const label = document.createElement('div');
+    label.className = 'bar-label';
+    label.textContent = r.label;
+    label.title = r.label;
+    const track = document.createElement('div');
+    track.className = 'bar-track';
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill';
+    track.appendChild(fill);
+    const val = document.createElement('div');
+    val.className = 'bar-val';
+    val.textContent = (typeof r.value === 'number' && isFinite(r.value))
+      ? r.value.toLocaleString('en-US') : String(r.value);
+    row.appendChild(label); row.appendChild(track); row.appendChild(val);
+    container.appendChild(row);
+    fills.push({ el: fill, pct: Math.max(2, Math.round((r.value / max) * 100)) });
+  });
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fills.forEach(function (f, i) {
+    if (reduce) { f.el.style.width = f.pct + '%'; return; }
+    f.el.style.transition = 'width .6s cubic-bezier(.2,.8,.3,1)';
+    window.requestAnimationFrame(function () {
+      window.setTimeout(function () { f.el.style.width = f.pct + '%'; }, i * o.stagger);
+    });
+  });
+}
+
+/* Snapshot of the file exactly as it loaded, before any rendering. A backup copy
+   is this markup with the seed block swapped for the current data, so the saved
+   .html file IS the backup: open it anywhere and everything is there. */
+var PRISTINE_HTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+/* ===== config + state ===== */
+var CFG = { cooldownMs: 30 * 60 * 1000, sound: true };
+window.__cfg = CFG; // test hook
+
+var DUNGEONS = [
+  { id: 'candle',  rune: '🕯', name: 'The Candle That Melts Eternity' },
+  { id: 'ice',     rune: '❄',       name: 'Ice Survival' },
+  { id: 'scarlet', rune: '🌹', name: 'Scarlet Dream' },
+  { id: 'frozen',  rune: '⏳',       name: 'Frozen Moment' },
+  { id: 'hall',    rune: '⛪',       name: 'Hall of Repentance' },
+  { id: 'madness', rune: '🌀',      name: "Tumgir's Distorted Madness" },
+  { id: 'duel',    rune: '⚔',        name: 'The Stockhouse Duel' },
+  { id: 'primal',  rune: '🐾',      name: 'The Primal Trail' }
+];
+var GATE_COUNT = DUNGEONS.length;
+var BUFF_NAMES = ['Mastery Report', 'Abundance Fruit', 'Golden Apple Pie', 'Black Anvil'];
+
+var gates = DUNGEONS.map(function (d) { return { id: d.id, endsAt: null }; });
+var runs = [];
+var audioCtx = null;
+
+/* ===== helpers ===== */
+function byId(x) { return document.getElementById(x); }
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
+function fmtClock(ms) {
+  var s = Math.max(0, Math.ceil(ms / 1000));
+  return pad2(Math.floor(s / 60)) + ':' + pad2(s % 60);
+}
+function fmtTimeOfDay(d) { return pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
+function fmtStamp(d) { return pad2(d.getMonth() + 1) + '/' + pad2(d.getDate()) + ' ' + fmtTimeOfDay(d); }
+function num(v) {
+  if (typeof v === 'number') return isFinite(v) ? Math.round(v) : 0;
+  var n = parseInt(String(v == null ? '' : v).replace(/,/g, ''), 10);
+  return isNaN(n) ? 0 : n;
+}
+/* Parse a typed or PASTED number. Returns null when the text is not a number.
+   Pasting "16,017,180" into an <input type=number> silently yields "", which is
+   how a run once logged as 0. These fields are text inputs now and commas,
+   spaces and underscores are all accepted. */
+function parseNum(raw) {
+  var t = String(raw == null ? '' : raw).trim().replace(/[,\s_]/g, '');
+  if (t === '') return 0;
+  if (!/^\d+$/.test(t)) return null;
+  var n = parseInt(t, 10);
+  return isNaN(n) ? null : n;
+}
+
+/* every number shown to the user goes through this: 11161 -> "11,161" */
+function comma(v) {
+  var n = Number(v);
+  if (!isFinite(n)) return '0';
+  return n.toLocaleString('en-US');
+}
+function comma1(v) {
+  var n = Number(v);
+  if (!isFinite(n)) return '0.0';
+  return n.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+}
+function gate(id) { for (var i = 0; i < gates.length; i++) if (gates[i].id === id) return gates[i]; return null; }
+
+/* Manual time entry. Accepts:
+     "18:30"  -> 18m30s remaining
+     "18"     -> 18 minutes remaining
+     "-12"    -> finished 12 minutes ago, so 18 minutes remain
+   Returns milliseconds remaining, 0 when the cooldown is already spent, or null if unparseable. */
+function parseManualTime(raw) {
+  var s = String(raw == null ? '' : raw).trim().toLowerCase().replace(/\s*(ago|min|mins|minutes|m)\s*$/, '');
+  if (!s) return null;
+  var ago = false;
+  if (s.charAt(0) === '-' || s.charAt(0) === '+') { ago = s.charAt(0) === '-'; s = s.slice(1).trim(); }
+  var ms;
+  var mm = s.match(/^(\d{1,3}):([0-5]?\d)$/);
+  if (mm) ms = (parseInt(mm[1], 10) * 60 + parseInt(mm[2], 10)) * 1000;
+  else if (/^\d{1,3}(\.\d+)?$/.test(s)) ms = Math.round(parseFloat(s) * 60000);
+  else return null;
+  if (ago) ms = CFG.cooldownMs - ms;
+  if (ms <= 0) return 0;
+  return ms;
+}
+
+/* ===== persistence =====
+   Autosave uses localStorage when the page can reach it (opening the .html file
+   from your own disk). Some sandboxed embeds block storage entirely, so every
+   write is wrapped and a manual save code is always available as the fallback. */
+var STORE_KEY = 'throne.minigame.checklist.v1';
+var storageOK = (function () {
+  try {
+    var k = STORE_KEY + '.probe';
+    window.localStorage.setItem(k, '1');
+    var v = window.localStorage.getItem(k);
+    window.localStorage.removeItem(k);
+    return v === '1';
+  } catch (e) { return false; }
+})();
+
+function snapshot() {
+  return {
+    v: 1,
+    savedAt: Date.now(),
+    sound: CFG.sound,
+    gates: gates.map(function (g) { return { id: g.id, endsAt: g.endsAt }; }),
+    runs: runs
+  };
+}
+
+/* returns {gatesRestored, expiredWhileAway, runsRestored} or null */
+function applySnapshot(data) {
+  if (!data || typeof data !== 'object') return null;
+  var now = Date.now();
+  var restored = 0, expired = 0;
+
+  if (Array.isArray(data.gates)) {
+    data.gates.forEach(function (sg) {
+      var g = gate(sg.id);
+      if (!g) return;                       // unknown id from an older save
+      var e = sg.endsAt;
+      if (typeof e !== 'number' || !isFinite(e)) { g.endsAt = null; return; }
+      if (e <= now) { g.endsAt = null; expired++; }   // cooldown ran out while away
+      else if (e - now > CFG.cooldownMs) { g.endsAt = now + CFG.cooldownMs; restored++; } // clock skew guard
+      else { g.endsAt = e; restored++; }
+    });
+  }
+
+  runs.length = 0;
+  if (Array.isArray(data.runs)) {
+    data.runs.forEach(function (r) {
+      if (!r || typeof r !== 'object') return;
+      var start = num(r.tokensStart);
+      /* migration: older saves stored the after-value under coinsAfter, and
+         before that only tokensUsed existed. Tokens used is always derived. */
+      var after;
+      if (r.tokensAfter !== undefined && r.tokensAfter !== null) after = num(r.tokensAfter);
+      else if (r.coinsAfter !== undefined && r.coinsAfter !== null) after = num(r.coinsAfter);
+      else after = Math.max(0, start - num(r.tokensUsed));
+      runs.push({
+        stamp: String(r.stamp || ''),
+        tokensStart: start,
+        tokensAfter: after,
+        tokensUsed: Math.max(0, start - after),
+        sollant: num(r.sollant),
+        cores: num(r.cores),
+        wmp: num(r.wmp),
+        buffs: Array.isArray(r.buffs) ? r.buffs.filter(function (x) { return typeof x === 'string'; }) : []
+      });
+    });
+  }
+  if (typeof data.sound === 'boolean') CFG.sound = data.sound;
+  return { gatesRestored: restored, expiredWhileAway: expired, runsRestored: runs.length };
+}
+
+var lastWriteAt = 0;
+function save() {
+  if (!storageOK) { refreshSaveCode(); return; }
+  try {
+    var snap = snapshot();
+    window.localStorage.setItem(STORE_KEY, JSON.stringify(snap));
+    lastWriteAt = snap.savedAt;
+  }
+  catch (e) { storageOK = false; markStorageState(); }
+  refreshSaveCode();
+}
+
+/* Unload-only write. A second tab left open from an earlier session would
+   otherwise overwrite newer data with its own stale copy when it closes.
+   Deliberate deletions still save, because those go through save() directly. */
+function saveOnExit() {
+  if (!storageOK) return;
+  try {
+    var existing = window.localStorage.getItem(STORE_KEY);
+    if (existing) {
+      var prev = JSON.parse(existing);
+      if (prev && (prev.savedAt || 0) > lastWriteAt &&
+          Array.isArray(prev.runs) && prev.runs.length > runs.length) return;
+    }
+  } catch (e) { /* unreadable existing value is no reason to skip */ }
+  save();
+}
+
+function load() {
+  if (!storageOK) return null;
+  try {
+    var raw = window.localStorage.getItem(STORE_KEY);
+    if (!raw) return null;
+    return applySnapshot(JSON.parse(raw));
+  } catch (e) { return null; }
+}
+
+function wipeSaved() {
+  try { if (storageOK) window.localStorage.removeItem(STORE_KEY); } catch (e) {}
+}
+
+/* save code: base64 of the same snapshot, for when storage is blocked
+   or you want to move the log to another machine */
+function encodeCode() {
+  var json = JSON.stringify(snapshot());
+  try { return btoa(unescape(encodeURIComponent(json))); } catch (e) { return json; }
+}
+function decodeCode(code) {
+  code = String(code || '').trim();
+  if (!code) return null;
+  var json = code;
+  if (code.charAt(0) !== '{') {
+    try { json = decodeURIComponent(escape(atob(code))); } catch (e) { return null; }
+  }
+  try { return JSON.parse(json); } catch (e) { return null; }
+}
+function refreshSaveCode() {
+  var ta = byId('saveCode');
+  if (ta && document.activeElement !== ta) ta.value = encodeCode();
+}
+function markStorageState() {
+  var el = byId('saveState');
+  if (!el) return;
+  el.textContent = storageOK
+    ? 'Autosave on. Gates, countdowns and the run log survive a reload or a closed tab.'
+    : 'Autosave is blocked in this embed. Copy the save code below before you close the page, then paste it back in to restore.';
+  el.className = storageOK ? 'hint' : 'err';
+  var chip = byId('saveChip');
+  if (chip) {
+    chip.textContent = storageOK ? 'AUTOSAVE ON' : 'AUTOSAVE BLOCKED';
+    chip.className = 'badge ' + (storageOK ? 'b-info' : 'b-hot');
+  }
+  var note = byId('footNote');
+  if (note) {
+    note.textContent = storageOK
+      ? 'Gates, countdowns and the run log save automatically to this browser. Created by n0tviable \u00b7 Server: Distortion'
+      : 'This embed blocks autosave, so copy the save code before you close the page. Opening the .html file from your own disk gives you real autosave. Created by n0tviable \u00b7 Server: Distortion';
+  }
+}
+
+/* ===== baked-in file backup ===== */
+function readSeed() {
+  var el = byId('dataSeed');
+  if (!el) return null;
+  try {
+    var d = JSON.parse(el.textContent);
+    return (d && typeof d === 'object' && Array.isArray(d.runs)) ? d : null;
+  } catch (e) { return null; }
+}
+
+function buildBackupHtml() {
+  var payload = JSON.stringify(snapshot()).replace(/</g, '\\u003c');
+  var open = PRISTINE_HTML.indexOf('<script id="dataSeed"');
+  if (open === -1) return null;
+  var gt = PRISTINE_HTML.indexOf('>', open) + 1;
+  var close = PRISTINE_HTML.indexOf('</' + 'script>', gt);
+  if (close === -1) return null;
+  return PRISTINE_HTML.slice(0, gt) + payload + PRISTINE_HTML.slice(close);
+}
+
+function downloadBackup() {
+  var html = buildBackupHtml();
+  if (!html) { toast('Backup failed', 'Could not rebuild the page. Use the save code instead.'); return; }
+  try {
+    var d = new Date();
+    var name = 'throne-checklist-' + d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) +
+               '-' + pad2(d.getHours()) + pad2(d.getMinutes()) + '.html';
+    var blob = new Blob([html], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast('\u{1F4BE}  Saved to file', name + ' contains ' + comma(runs.length) +
+      ' runs and your gate timers. Open it to restore everything.');
+  } catch (e) {
+    toast('Download blocked', 'Use Copy save code instead.');
+  }
+}
+
+/* ===== sound + toast ===== */
+function unlockAudio() {
+  if (audioCtx) return;
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  try { audioCtx = new AC(); } catch (e) { audioCtx = null; }
+}
+function chime() {
+  if (!CFG.sound || !audioCtx) return;
+  try {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    [880, 1318.5].forEach(function (f, i) {
+      var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      var t = audioCtx.currentTime + i * 0.16;
+      o.type = 'sine'; o.frequency.setValueAtTime(f, t);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(t); o.stop(t + 0.45);
+    });
+  } catch (e) { /* audio is a nicety, never a blocker */ }
+}
+function toast(title, detail) {
+  var wrap = byId('toasts');
+  var el = document.createElement('div');
+  el.className = 'toast';
+  var t = document.createElement('div'); t.className = 't'; t.textContent = title;
+  var d = document.createElement('div'); d.className = 'd'; d.textContent = detail;
+  el.appendChild(t); el.appendChild(d);
+  wrap.appendChild(el);
+  setTimeout(function () {
+    el.style.transition = 'opacity .4s ease, transform .4s ease';
+    el.style.opacity = '0'; el.style.transform = 'translateY(8px)';
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 450);
+  }, 12000);
+}
+
+/* ===== gates: build once, tick forever ===== */
+function buildGates() {
+  var list = byId('dgnList');
+  list.textContent = '';
+  DUNGEONS.forEach(function (d, i) {
+    var card = document.createElement('div');
+    card.className = 'card item-card dgn';
+    card.id = 'card-' + d.id;
+    card.style.animationDelay = (i * 0.05) + 's';
+
+    var seal = document.createElement('label');
+    seal.className = 'seal';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.id = 'cb-' + d.id;
+    cb.setAttribute('aria-label', 'Mark ' + d.name + ' complete');
+    var box = document.createElement('span');
+    box.className = 'box'; box.textContent = '✔';
+    seal.appendChild(cb); seal.appendChild(box);
+
+    var meta = document.createElement('div');
+    meta.className = 'meta';
+    var name = document.createElement('div');
+    name.className = 'name';
+    var rune = document.createElement('span');
+    rune.className = 'rune'; rune.textContent = d.rune;
+    var nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = d.name;
+    var badge = document.createElement('span');
+    badge.className = 'badge b-info'; badge.id = 'badge-' + d.id; badge.textContent = 'READY';
+    name.appendChild(rune); name.appendChild(nm); name.appendChild(badge);
+    meta.appendChild(name);
+
+    var right = document.createElement('div');
+    right.className = 'right';
+    var clock = document.createElement('button');
+    clock.className = 'clock ready'; clock.id = 'clock-' + d.id; clock.textContent = 'OPEN';
+    clock.title = 'Click to set the time manually';
+    var sub = document.createElement('div');
+    sub.className = 'sub'; sub.id = 'sub-' + d.id; sub.textContent = 'set time';
+    right.appendChild(clock); right.appendChild(sub);
+
+    /* manual time editor, for when you forget to check the box on the way out */
+    var edit = document.createElement('div');
+    edit.className = 'edit'; edit.id = 'edit-' + d.id; edit.hidden = true;
+    var inp = document.createElement('input');
+    inp.type = 'text'; inp.id = 'in-' + d.id; inp.placeholder = '18:30  or  -12';
+    inp.setAttribute('aria-label', 'Set remaining time for ' + d.name);
+    var okb = document.createElement('button'); okb.className = 'btn mini primary'; okb.textContent = 'Set';
+    var cxb = document.createElement('button'); cxb.className = 'btn mini'; cxb.textContent = '✕';
+    var eh = document.createElement('span');
+    eh.className = 'ehint'; eh.textContent = 'time left, or -12 = finished 12 min ago';
+    edit.appendChild(inp); edit.appendChild(okb); edit.appendChild(cxb); edit.appendChild(eh);
+
+    var track = document.createElement('div');
+    track.className = 'track';
+    var fill = document.createElement('i'); fill.id = 'fill-' + d.id;
+    track.appendChild(fill);
+
+    card.appendChild(seal); card.appendChild(meta); card.appendChild(right);
+    card.appendChild(edit); card.appendChild(track);
+    list.appendChild(card);
+
+    function openEditor() {
+      var g = gate(d.id);
+      edit.hidden = false;
+      inp.value = g.endsAt === null ? '' : fmtClock(g.endsAt - Date.now());
+      inp.focus(); inp.select();
+    }
+    function closeEditor() { edit.hidden = true; inp.classList.remove('bad'); }
+    function applyEditor() {
+      var ms = parseManualTime(inp.value);
+      if (ms === null) { inp.classList.add('bad'); return; }
+      var g = gate(d.id);
+      if (ms <= 0) { g.endsAt = null; cb.checked = false; }
+      else { g.endsAt = Date.now() + Math.min(ms, CFG.cooldownMs); cb.checked = true; }
+      closeEditor();
+      render();
+      save();
+    }
+    clock.addEventListener('click', function () { edit.hidden ? openEditor() : closeEditor(); });
+    okb.addEventListener('click', applyEditor);
+    cxb.addEventListener('click', closeEditor);
+    inp.addEventListener('input', function () { inp.classList.remove('bad'); });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') applyEditor();
+      if (e.key === 'Escape') closeEditor();
+    });
+
+    cb.addEventListener('change', function () {
+      unlockAudio();
+      var g = gate(d.id);
+      if (cb.checked) {
+        g.endsAt = Date.now() + CFG.cooldownMs;
+        card.classList.remove('ready-pulse');
+      } else {
+        g.endsAt = null;
+      }
+      render();
+      save();
+    });
+  });
+}
+
+function onGateReset(d) {
+  var card = byId('card-' + d.id);
+  if (card) {
+    card.classList.remove('ready-pulse');
+    void card.offsetWidth;
+    card.classList.add('ready-pulse');
+  }
+  toast(d.rune + '  ' + d.name + ' has reset', 'Thirty minutes are up. The gate stands open again.');
+  chime();
+}
+
+/* one interval drives every gate: no per-timer handles to leak */
+function tick() {
+  var now = Date.now();
+  var changed = false;
+  for (var i = 0; i < gates.length; i++) {
+    var g = gates[i];
+    if (g.endsAt !== null && now >= g.endsAt) {
+      g.endsAt = null;
+      var cb = byId('cb-' + g.id);
+      if (cb) cb.checked = false;
+      onGateReset(DUNGEONS[i]);
+      changed = true;
+    }
+  }
+  render();
+  if (changed) save();
+}
+
+function render() {
+  var now = Date.now();
+  var ready = 0, soonest = null, soonestName = '';
+  for (var i = 0; i < gates.length; i++) {
+    var g = gates[i], d = DUNGEONS[i];
+    var card = byId('card-' + d.id);
+    var clock = byId('clock-' + d.id);
+    var sub = byId('sub-' + d.id);
+    var badge = byId('badge-' + d.id);
+    var fill = byId('fill-' + d.id);
+    if (!card) continue;
+    if (g.endsAt === null) {
+      ready++;
+      card.classList.remove('on-cd');
+      clock.className = 'clock ready';
+      clock.textContent = 'OPEN';
+      sub.textContent = 'set time';
+      badge.className = 'badge b-info';
+      badge.textContent = 'READY';
+      fill.style.width = '0%';
+    } else {
+      var left = g.endsAt - now;
+      card.classList.add('on-cd');
+      clock.className = 'clock run';
+      clock.textContent = fmtClock(left);
+      sub.textContent = 'opens ' + fmtTimeOfDay(new Date(g.endsAt));
+      badge.className = 'badge b-warn';
+      badge.textContent = 'SEALED';
+      var pct = Math.max(0, Math.min(100, (1 - left / CFG.cooldownMs) * 100));
+      fill.style.width = pct.toFixed(1) + '%';
+      if (soonest === null || g.endsAt < soonest) { soonest = g.endsAt; soonestName = d.name; }
+    }
+  }
+
+  byId('heroNum').textContent = ready + ' / ' + GATE_COUNT;
+  byId('heroTitle').textContent =
+    ready === GATE_COUNT ? 'All Gates Open' :
+    ready === 0 ? 'Every Gate Sealed' :
+    'Gates Open';
+  byId('nextUp').textContent = soonest === null
+    ? (ready === GATE_COUNT ? 'All open' : 'Next: —')
+    : 'Next: ' + soonestName + ' in ' + fmtClock(soonest - now);
+  document.title = (ready === GATE_COUNT ? '✓ ' : '(' + ready + '/' + GATE_COUNT + ') ') + 'Throne Mini Game Checklist';
+
+  renderMarquee(ready, soonestName, soonest === null ? null : soonest - now);
+  byId('footLine').textContent =
+    ready + ' of ' + GATE_COUNT + ' gates open. ' + comma(runs.length) + (runs.length === 1 ? ' Hollow run logged.' : ' Hollow runs logged.');
+}
+
+/* ===== marquee ===== */
+var MARQUEE_SLOTS = 6;
+var marqueeSpans = null;
+function buildMarquee() {
+  var m = byId('marquee');
+  m.textContent = '';
+  marqueeSpans = [];
+  /* duplicated once so the -50% scroll loop is seamless */
+  for (var pass = 0; pass < 2; pass++) {
+    for (var i = 0; i < MARQUEE_SLOTS; i++) {
+      var span = document.createElement('span');
+      span.style.color = 'var(--muted)';
+      span.style.fontWeight = '700';
+      span.style.fontSize = '.82rem';
+      m.appendChild(span);
+      marqueeSpans.push(span);
+    }
+  }
+}
+function renderMarquee(ready, nextName, nextMs) {
+  if (!marqueeSpans) buildMarquee();
+  var s = stats();
+  var bits = [
+    '\u{1F6AA} ' + ready + '/' + GATE_COUNT + ' gates open',
+    nextName ? ('⏱ next: ' + nextName + ' in ' + fmtClock(nextMs)) : '⏱ no seals running',
+    '\u{1F5FF} ' + comma(runs.length) + ' Hollow runs logged',
+    '\u{1F4B0} ' + comma(s.totalSollant) + ' Sollant acquired',
+    '⚔ ' + comma(s.totalWmp) + ' total mastery pts',
+    '\u{1FA99} ' + comma(s.tokensUsed) + ' contract tokens spent'
+  ];
+  /* update text in place: rebuilding the nodes would restart the scroll animation */
+  for (var i = 0; i < marqueeSpans.length; i++) {
+    var t = bits[i % MARQUEE_SLOTS];
+    if (marqueeSpans[i].textContent !== t) marqueeSpans[i].textContent = t;
+  }
+}
+
+/* ===== run log ===== */
+function stats() {
+  var n = runs.length;
+  var tokensUsed = 0, cores = 0, wmp = 0, sollant = 0, bestWmp = 0, bestCores = 0, bestSollant = 0;
+  for (var i = 0; i < n; i++) {
+    var r = runs[i];
+    tokensUsed += r.tokensUsed;
+    cores += r.cores;
+    wmp += r.wmp;
+    sollant += r.sollant;
+    if (r.wmp > bestWmp) bestWmp = r.wmp;
+    if (r.cores > bestCores) bestCores = r.cores;
+    if (r.sollant > bestSollant) bestSollant = r.sollant;
+  }
+  return {
+    n: n,
+    tokensUsed: tokensUsed,
+    tokensLeft: n ? runs[n - 1].tokensAfter : 0,
+    avgTokens: n ? Math.round(tokensUsed / n) : 0,
+    totalCores: cores,
+    totalWmp: wmp,
+    totalSollant: sollant,
+    avgCores: n ? (cores / n).toFixed(2) : '0.00',
+    avgWmp: n ? (wmp / n) : 0,
+    avgSollant: n ? Math.round(sollant / n) : 0,
+    bestWmp: bestWmp,
+    bestCores: bestCores,
+    bestSollant: bestSollant,
+    /* tokens are the scarce resource, so this is the real efficiency number */
+    sollantPerToken: tokensUsed > 0 ? Math.round(sollant / tokensUsed) : 0,
+    wmpPerToken: tokensUsed > 0 ? (wmp / tokensUsed) : 0
+  };
+}
+
+function renderKpis() {
+  var s = stats();
+  var tiles = [
+    { v: comma(s.n),           l: 'Runs logged',                 c: 'a-c' },
+    { v: comma(s.tokensLeft),  l: 'Contract Tokens remaining',   c: 'a-d' },
+    { v: comma(s.tokensUsed),  l: 'Contract Tokens spent',       c: 'a-b' },
+    { v: comma(s.avgTokens),   l: 'Avg Tokens / run',            c: 'a-b' },
+
+    { v: comma(s.totalSollant),    l: 'Total Sollant acquired',  c: 'a-d' },
+    { v: comma(s.avgSollant),      l: 'Avg Sollant / run',       c: 'a-d' },
+    { v: comma(s.sollantPerToken), l: 'Sollant per Token spent', c: 'a-c' },
+    { v: comma(s.bestSollant),     l: 'Best run (Sollant)',      c: 'a-d' },
+
+    { v: s.avgCores,           l: 'Avg Skill Cores / run',       c: 'a-a' },
+    { v: comma1(s.avgWmp),     l: 'Avg Mastery Pts / run',       c: 'a-a' },
+    { v: comma(s.totalWmp),    l: 'Total Mastery Pts',           c: 'a-c' },
+    { v: comma(s.bestWmp),     l: 'Best run (Mastery Pts)',      c: 'a-b' }
+  ];
+  var wrap = byId('kpis');
+  wrap.textContent = '';
+  tiles.forEach(function (t) {
+    var card = document.createElement('div');
+    card.className = 'card stat stat-pop';
+    var body = document.createElement('div');
+    body.className = 'card-body';
+    var v = document.createElement('div');
+    v.className = 'v ' + t.c; v.textContent = t.v;
+    var l = document.createElement('div');
+    l.className = 'l'; l.textContent = t.l;
+    body.appendChild(v); body.appendChild(l);
+    card.appendChild(body);
+    wrap.appendChild(card);
+  });
+}
+
+function td(text, cls) {
+  var c = document.createElement('td');
+  if (cls) c.className = cls;
+  c.textContent = text;
+  return c;
+}
+
+/* An editable numeric cell. Click the value, type a new one (commas fine),
+   Enter or blur commits, Escape cancels. Tokens used always recomputes. */
+function editableTd(runIndex, key, cls, opts) {
+  opts = opts || {};
+  var c = document.createElement('td');
+  c.className = 'num editable' + (cls ? ' ' + cls : '');
+  var btn = document.createElement('button');
+  btn.className = 'cellval';
+  btn.title = 'Click to edit';
+  btn.textContent = comma(runs[runIndex][key]);
+  c.appendChild(btn);
+
+  function commit(raw, inputEl) {
+    var v = opts.select ? num(raw) : parseNum(raw);
+    if (v === null || v < 0) { inputEl.classList.add('bad'); return false; }
+    if (opts.max !== undefined && v > opts.max) { inputEl.classList.add('bad'); return false; }
+    var r = runs[runIndex];
+    r[key] = v;
+    if (key === 'tokensStart' || key === 'tokensAfter') {
+      r.tokensUsed = Math.max(0, r.tokensStart - r.tokensAfter);
+    }
+    renderAllRunViews();
+    return true;
+  }
+
+  btn.addEventListener('click', function () {
+    var el;
+    if (opts.select) {
+      el = document.createElement('select');
+      for (var i = 0; i <= 5; i++) {
+        var o = document.createElement('option');
+        o.value = String(i); o.textContent = String(i);
+        el.appendChild(o);
+      }
+      el.value = String(runs[runIndex][key]);
+    } else {
+      el = document.createElement('input');
+      el.type = 'text';
+      el.inputMode = 'numeric';
+      el.value = String(runs[runIndex][key]);
+    }
+    el.className = 'celledit';
+    c.textContent = '';
+    c.appendChild(el);
+    el.focus();
+    if (el.select) el.select();
+
+    var done = false;
+    function finish(save) {
+      if (done) return;
+      if (save && !commit(el.value, el)) return;
+      done = true;
+      if (!save) renderRuns();
+    }
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+      if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+    });
+    el.addEventListener('input', function () { el.classList.remove('bad'); });
+    el.addEventListener('blur', function () { finish(true); });
+    if (opts.select) el.addEventListener('change', function () { finish(true); });
+  });
+  return c;
+}
+
+function renderRuns() {
+  var body = byId('runBody');
+  body.textContent = '';
+  byId('runCount').textContent = comma(runs.length);
+  byId('runEmpty').style.display = runs.length ? 'none' : 'block';
+
+  for (var i = runs.length - 1; i >= 0; i--) {
+    var r = runs[i];
+    var tr = document.createElement('tr');
+
+    tr.appendChild(td('#' + comma(i + 1), 'num'));
+    tr.appendChild(td(r.stamp));
+    tr.appendChild(editableTd(i, 'tokensStart'));
+    tr.appendChild(editableTd(i, 'tokensAfter'));
+    tr.appendChild(td(comma(r.tokensUsed), 'num neg'));
+    tr.appendChild(editableTd(i, 'sollant', 'gold'));
+    tr.appendChild(editableTd(i, 'cores', '', { select: true, max: 5 }));
+    tr.appendChild(editableTd(i, 'wmp', 'pos'));
+
+    var bcell = document.createElement('td');
+    bcell.className = 'buffcell';
+    BUFF_NAMES.forEach(function (name) {
+      var on = r.buffs.indexOf(name) !== -1;
+      var pill = document.createElement('button');
+      pill.className = 'pill toggle' + (on ? ' on' : '');
+      pill.textContent = name;
+      pill.title = 'Click to toggle';
+      (function (idx, nm) {
+        pill.addEventListener('click', function () {
+          var list = runs[idx].buffs;
+          var at = list.indexOf(nm);
+          if (at === -1) list.push(nm); else list.splice(at, 1);
+          renderAllRunViews();
+        });
+      })(i, name);
+      bcell.appendChild(pill);
+    });
+    tr.appendChild(bcell);
+
+    var xcell = document.createElement('td');
+    var x = document.createElement('button');
+    x.className = 'x'; x.textContent = '✕';
+    x.title = 'Delete this run';
+    (function (idx) {
+      x.addEventListener('click', function () {
+        runs.splice(idx, 1);
+        renderAllRunViews();
+      });
+    })(i);
+    xcell.appendChild(x);
+    tr.appendChild(xcell);
+
+    body.appendChild(tr);
+  }
+}
+
+function renderTrends() {
+  var last = runs.slice(-10);
+  var wmpRows = [], coreRows = [], tokRows = [], solRows = [];
+  for (var i = last.length - 1; i >= 0; i--) {
+    var idx = runs.length - last.length + i + 1;
+    wmpRows.push({ label: 'Run #' + idx, value: last[i].wmp });
+    coreRows.push({ label: 'Run #' + idx, value: last[i].cores });
+    tokRows.push({ label: 'Run #' + idx, value: last[i].tokensUsed });
+    solRows.push({ label: 'Run #' + idx, value: last[i].sollant });
+  }
+  drawBars(byId('barsSollant'), solRows);
+  drawBars(byId('barsWmp'), wmpRows);
+  drawBars(byId('barsCores'), coreRows, { max: 5 });
+  drawBars(byId('barsTokens'), tokRows);
+
+  var counts = BUFF_NAMES.map(function (nm) {
+    var c = 0;
+    runs.forEach(function (r) { if (r.buffs.indexOf(nm) !== -1) c++; });
+    return { label: nm, value: c };
+  });
+  drawBars(byId('barsBuffs'), runs.length ? counts : [], { max: Math.max(1, runs.length) });
+}
+
+function renderAllRunViews() {
+  renderKpis();
+  renderRuns();
+  renderTrends();
+  render();
+  save();
+}
+
+/* ===== form ===== */
+function selectedBuffs() {
+  var out = [];
+  document.querySelectorAll('.buff input[data-buff]').forEach(function (cb) {
+    if (cb.checked) out.push(cb.getAttribute('data-buff'));
+  });
+  return out;
+}
+function syncBuffChips() {
+  document.querySelectorAll('.buff').forEach(function (l) {
+    var cb = l.querySelector('input');
+    l.classList.toggle('on', !!(cb && cb.checked));
+  });
+}
+/* Tokens used is never typed: it is start minus after, recomputed on every keystroke. */
+var FNUM = [
+  { id: 'fTokStart', label: 'Tokens at start' },
+  { id: 'fTokAfter', label: 'Tokens after the run' },
+  { id: 'fSollant',  label: 'Sollant acquired' },
+  { id: 'fWmp',      label: 'Weapon Mastery Points' }
+];
+function readNumField(id) {
+  var el = byId(id);
+  var v = parseNum(el.value);
+  el.classList.toggle('bad', v === null);
+  return v;
+}
+function computeUsed() {
+  var start = readNumField('fTokStart');
+  var after = readNumField('fTokAfter');
+  readNumField('fSollant');
+  readNumField('fWmp');
+
+  var badNames = [];
+  for (var i = 0; i < FNUM.length; i++) {
+    if (parseNum(byId(FNUM[i].id).value) === null) badNames.push(FNUM[i].label);
+  }
+
+  var field = byId('fTokUsed');
+  var used = (start === null || after === null) ? null : start - after;
+  var negative = used !== null && used < 0;
+  field.value = used === null ? '—' : comma(used);
+  field.classList.toggle('bad', negative || used === null);
+
+  byId('hintStart').textContent = (start === null || byId('fTokStart').value === '') ? ' ' : comma(start) + ' tokens';
+  byId('hintAfter').textContent = (after === null || byId('fTokAfter').value === '') ? ' ' : comma(after) + ' tokens';
+
+  var msg = '';
+  if (badNames.length) msg = 'Not a number: ' + badNames.join(', ') + '. Digits only (commas are fine).';
+  else if (negative) msg = 'Tokens after is higher than tokens at start, so used would be negative.';
+  byId('formErr').textContent = msg;
+
+  return { start: start, after: after, used: used, bad: badNames.length > 0 || negative };
+}
+
+function clearForm() {
+  ['fTokStart', 'fTokAfter', 'fWmp', 'fSollant'].forEach(function (id) { byId(id).value = ''; });
+  byId('fCores').value = '0';
+  document.querySelectorAll('.buff input').forEach(function (cb) { cb.checked = false; });
+  document.querySelectorAll('#hollow input.bad').forEach(function (el) { el.classList.remove('bad'); });
+  syncBuffChips();
+  computeUsed();
+  byId('formErr').textContent = '';
+}
+
+function addRun() {
+  var c = computeUsed();
+  if (c.bad) return;
+  var r = {
+    stamp: fmtStamp(new Date()),
+    tokensStart: c.start,
+    tokensAfter: c.after,
+    tokensUsed: c.used,
+    sollant: parseNum(byId('fSollant').value),
+    cores: num(byId('fCores').value),
+    wmp: parseNum(byId('fWmp').value),
+    buffs: selectedBuffs()
+  };
+  runs.push(r);
+  clearForm();
+  renderAllRunViews();
+  unlockAudio();
+  toast('\u{1F5FF}  Run #' + comma(runs.length) + ' logged',
+    comma(r.sollant) + ' Sollant, ' + comma(r.cores) + ' skill cores, ' +
+    comma(r.wmp) + ' mastery points, ' + comma(r.tokensUsed) + ' tokens spent.');
+}
+
+/* ===== CSV ===== */
+function csv() {
+  var head = ['Run', 'Logged', 'TokensAtStart', 'TokensAfter', 'TokensUsed', 'SollantAcquired',
+              'SkillCores', 'WeaponMasteryPts', 'MasteryReport', 'AbundanceFruit', 'GoldenApplePie', 'BlackAnvil'];
+  var lines = [head.join(',')];
+  runs.forEach(function (r, i) {
+    lines.push([
+      i + 1, r.stamp, r.tokensStart, r.tokensAfter, r.tokensUsed, r.sollant, r.cores, r.wmp,
+      r.buffs.indexOf('Mastery Report') !== -1 ? 'Y' : 'N',
+      r.buffs.indexOf('Abundance Fruit') !== -1 ? 'Y' : 'N',
+      r.buffs.indexOf('Golden Apple Pie') !== -1 ? 'Y' : 'N',
+      r.buffs.indexOf('Black Anvil') !== -1 ? 'Y' : 'N'
+    ].join(','));
+  });
+  return lines.join('\n');
+}
+function copyCsv() {
+  var text = csv();
+  var done = function () { toast('\u{1F4CB}  Copied', runs.length + ' runs copied to your clipboard as CSV.'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, fallback);
+  } else { fallback(); }
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); }
+    catch (e) { toast('Copy blocked', 'Use Download CSV instead.'); }
+    document.body.removeChild(ta);
+  }
+}
+function downloadCsv() {
+  try {
+    var blob = new Blob([csv()], { type: 'text/csv' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'tumgir-hollow-runs.csv';
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast('⬇  CSV ready', 'tumgir-hollow-runs.csv saved.');
+  } catch (e) {
+    toast('Download blocked', 'Use Copy as CSV instead.');
+  }
+}
+
+/* ===== wiring ===== */
+byId('sealAll').addEventListener('click', function () {
+  unlockAudio();
+  var now = Date.now();
+  gates.forEach(function (g) {
+    g.endsAt = now + CFG.cooldownMs;
+    var cb = byId('cb-' + g.id);
+    if (cb) cb.checked = true;
+  });
+  render();
+  save();
+});
+byId('resetAll').addEventListener('click', function () {
+  gates.forEach(function (g) {
+    g.endsAt = null;
+    var cb = byId('cb-' + g.id);
+    if (cb) cb.checked = false;
+  });
+  render();
+  save();
+});
+byId('soundBtn').addEventListener('click', function () {
+  unlockAudio();
+  CFG.sound = !CFG.sound;
+  this.textContent = CFG.sound ? '🔊 Chime: On' : '🔇 Chime: Off';
+  if (CFG.sound) chime();
+  save();
+});
+
+/* save + restore panel */
+byId('saveFile').addEventListener('click', downloadBackup);
+byId('copyCode').addEventListener('click', function () {
+  refreshSaveCode();
+  var ta = byId('saveCode');
+  ta.select();
+  var text = ta.value;
+  var done = function () { toast('\u{1F4BE}  Save code copied', 'Paste it back into any copy of this page to restore.'); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () {
+      try { document.execCommand('copy'); done(); } catch (e) { toast('Copy blocked', 'Select the box and copy manually.'); }
+    });
+  } else {
+    try { document.execCommand('copy'); done(); } catch (e) { toast('Copy blocked', 'Select the box and copy manually.'); }
+  }
+});
+byId('restoreCode').addEventListener('click', function () {
+  var err = byId('restoreErr');
+  var data = decodeCode(byId('saveCode').value);
+  if (!data) { err.textContent = 'That does not look like a valid save code.'; return; }
+  err.textContent = '';
+  var res = applySnapshot(data);
+  gates.forEach(function (g) {
+    var cb = byId('cb-' + g.id);
+    if (cb) cb.checked = g.endsAt !== null;
+  });
+  byId('soundBtn').textContent = CFG.sound ? '🔊 Chime: On' : '🔇 Chime: Off';
+  renderAllRunViews();
+  toast('\u{1F4E5}  Restored', res.runsRestored + ' runs and ' + res.gatesRestored + ' running seals loaded.');
+});
+byId('forgetAll').addEventListener('click', function () {
+  gates.forEach(function (g) {
+    g.endsAt = null;
+    var cb = byId('cb-' + g.id);
+    if (cb) cb.checked = false;
+  });
+  runs.length = 0;
+  wipeSaved();
+  renderAllRunViews();
+  toast('Slate wiped', 'Gates and run log cleared, and the saved copy is gone too.');
+});
+byId('addRun').addEventListener('click', addRun);
+byId('clearForm').addEventListener('click', clearForm);
+byId('copyCsv').addEventListener('click', copyCsv);
+byId('dlCsv').addEventListener('click', downloadCsv);
+byId('wipeRuns').addEventListener('click', function () {
+  if (!runs.length) return;
+  runs.length = 0;
+  renderAllRunViews();
+  toast('Log cleared', 'The Hollow forgets. Start again.');
+});
+document.querySelectorAll('.buff input').forEach(function (cb) {
+  cb.addEventListener('change', syncBuffChips);
+});
+FNUM.forEach(function (f) {
+  byId(f.id).addEventListener('input', computeUsed);
+  byId(f.id).addEventListener('change', computeUsed);
+});
+['fTokStart', 'fTokAfter', 'fSollant', 'fWmp', 'fCores'].forEach(function (id) {
+  byId(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') addRun(); });
+});
+
+/* ===== boot ===== */
+byId('loadedAt').textContent = 'Loaded ' + fmtTimeOfDay(new Date());
+buildGates();
+
+var seed = readSeed();
+var restored = load();
+if (seed) {
+  var storedAt = 0;
+  try {
+    var raw = storageOK ? window.localStorage.getItem(STORE_KEY) : null;
+    if (raw) storedAt = JSON.parse(raw).savedAt || 0;
+  } catch (e) { storedAt = 0; }
+  /* the file's own data wins when it is newer than whatever this browser holds */
+  if (!restored || (seed.savedAt || 0) > storedAt) {
+    restored = applySnapshot(seed);
+    restored.fromFile = true;
+    save();
+  }
+}
+if (restored) {
+  gates.forEach(function (g) {
+    var cb = byId('cb-' + g.id);
+    if (cb) cb.checked = g.endsAt !== null;
+  });
+  byId('soundBtn').textContent = CFG.sound ? '🔊 Chime: On' : '🔇 Chime: Off';
+}
+markStorageState();
+computeUsed();
+renderAllRunViews();
+setInterval(tick, 250);
+
+if (restored) {
+  var parts = [];
+  if (restored.gatesRestored) parts.push(restored.gatesRestored + (restored.gatesRestored === 1 ? ' seal still holding' : ' seals still holding'));
+  if (restored.expiredWhileAway) parts.push(restored.expiredWhileAway + (restored.expiredWhileAway === 1 ? ' gate reopened while you were away' : ' gates reopened while you were away'));
+  if (restored.runsRestored) parts.push(comma(restored.runsRestored) + (restored.runsRestored === 1 ? ' run' : ' runs') + ' in the log');
+  if (parts.length) {
+    toast(restored.fromFile ? '\u{1F4C2}  Loaded from this file' : '\u{1F4DC}  Welcome back', parts.join(', ') + '.');
+  }
+}
+
+/* last-chance save if the tab is closed mid-countdown */
+window.addEventListener('pagehide', saveOnExit);
+window.addEventListener('beforeunload', saveOnExit);
+
+/* test hooks, harmless in normal use */
+window.__backup = buildBackupHtml;
+window.__state = {
+  gates: gates, runs: runs, stats: stats, tick: tick, addRun: addRun,
+  save: save, saveOnExit: saveOnExit, load: load, snapshot: snapshot, storageOK: function () { return storageOK; }
+};
+</script>
+</body>
+</html>
